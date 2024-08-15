@@ -4,7 +4,11 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
-    <!--include file="changelog/01-create-employee-scheme.xml" relativeToChangelogFile="true"/>
-    <include file="changelog/02-data-insert-employees.xml" relativeToChangelogFile="true"/-->
+<!--    <include file ="sql/dropTables.sql" relativeToChangelogFile="true"/>-->
+
+     <changeSet id="dropTable" author="toma">
+        <sqlFile path="sql/dropTables.sql" endDelimiter="\\" relativeToChangelogFile="true"/>
+    </changeSet>
+
 
 </databaseChangeLog>
