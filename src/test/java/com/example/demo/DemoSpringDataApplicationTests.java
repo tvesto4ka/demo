@@ -1,7 +1,7 @@
 package com.example.demo;
 
 import com.example.demo.entities.User;
-import com.example.demo.repositories.CustomizedUsersCrudRepository;
+import com.example.demo.repositories.UsersCrudRepository;
 import com.example.demo.services.UserDataService;
 import org.assertj.core.util.Lists;
 import org.junit.Test;
@@ -15,7 +15,7 @@ import java.util.Optional;
 
 public class DemoSpringDataApplicationTests extends AbstractSpringTest {
     @Autowired
-    private CustomizedUsersCrudRepository usersCrudRepository;
+    private UsersCrudRepository usersCrudRepository;
 
     @Autowired
     private UserDataService userDataService;

@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface CustomizedUsersCrudRepository extends CrudRepository<User, Long> {
+public interface UsersCrudRepository extends CrudRepository<User, Long> {
 
     Optional<User> findByFirstNameAndLastName(String firstName, String lastName);
     List<User> findFirst5ByFirstNameStartsWithOrderByFirstName(String firstNameStartsWith);
