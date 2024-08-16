@@ -1,0 +1,7 @@
+CREATE TABLE USERS (
+    ID INTEGER primary key autoincrement,
+    FIRST_NAME VARCHAR(50),
+    LAST_NAME VARCHAR(50),
+    EMAIL VARCHAR(50)
+);
+\\

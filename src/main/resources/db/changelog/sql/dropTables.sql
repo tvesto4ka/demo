@@ -1,2 +1,2 @@
-drop table Employee;
+drop table USERS;
 \\

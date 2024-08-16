@@ -6,8 +6,12 @@
 
 <!--    <include file ="sql/dropTables.sql" relativeToChangelogFile="true"/>-->
 
-     <changeSet id="dropTable" author="toma">
-        <sqlFile path="sql/dropTables.sql" endDelimiter="\\" relativeToChangelogFile="true"/>
+<!--     <changeSet id="dropTable" author="toma">-->
+<!--        <sqlFile path="sql/dropTables.sql" endDelimiter="\\" relativeToChangelogFile="true"/>-->
+<!--    </changeSet>-->
+
+    <changeSet id="createTables" author="toma">
+        <sqlFile path="sql/createTables.sql" endDelimiter="\\" relativeToChangelogFile="true"/>
     </changeSet>
 
 
