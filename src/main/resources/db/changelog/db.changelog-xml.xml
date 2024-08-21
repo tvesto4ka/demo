@@ -4,11 +4,7 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
-<!--    <include file ="sql/dropTables.sql" relativeToChangelogFile="true"/>-->
-
-<!--     <changeSet id="dropTable" author="toma">-->
-<!--        <sqlFile path="sql/dropTables.sql" endDelimiter="\\" relativeToChangelogFile="true"/>-->
-<!--    </changeSet>-->
+<!--    <include file ="sql/createTables.sql" relativeToChangelogFile="true"/>-->
 
     <changeSet id="createTables" author="toma">
         <sqlFile path="sql/createTables.sql" endDelimiter="\\" relativeToChangelogFile="true"/>
