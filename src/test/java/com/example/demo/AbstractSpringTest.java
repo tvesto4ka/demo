@@ -20,7 +20,8 @@ public abstract class AbstractSpringTest {
 
     @Before
     public void setUp() throws Exception {
-        jdbcTemplate.update("delete from users");
-        jdbcTemplate.update("UPDATE SQLITE_SEQUENCE SET SEQ=1 WHERE NAME='users'");
+        jdbcTemplate.update("DELETE FROM USERS");
+        jdbcTemplate.update("UPDATE SQLITE_SEQUENCE SET SEQ=0 WHERE NAME='USERS'");
+        jdbcTemplate.execute("INSERT INTO users (FIRST_NAME, LAST_NAME) VALUES ('Alex', 'Ivanov')");
     }
 }

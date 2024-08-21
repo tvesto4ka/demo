@@ -7,8 +7,6 @@ import org.assertj.core.util.Lists;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 
 import java.util.List;
 import java.util.Optional;
@@ -23,24 +21,25 @@ public class DemoSpringDataApplicationTests extends AbstractSpringTest {
     @Test
     public void testFindByFirstNameAndLastName() {
         Optional<User> usersOptional = usersCrudRepository.findByFirstNameAndLastName("Alex", "Ivanov");
+        Assertions.assertTrue(usersOptional.isPresent());
     }
 
     @Test
     public void testFindByFirstNameStartsWithOrderByFirstNamePage() {
         List<User> list = usersCrudRepository.
-                findByFirstNameStartsWith("A", PageRequest.of(1,3, Sort.by("firstName")));
+                findByFirstNameStartsWith("A");
         list.forEach(u -> System.out.println(u.getFirstName() + " " +u.getLastName()));
+        Assertions.assertNotNull(list.get(0));
     }
 
     @Test
     public void testCreateAndSaveUser() {
         List <User> list = Lists.newArrayList(usersCrudRepository.findAll());
-        System.out.println(list.size());
-        Assertions.assertEquals(0,list.size());
+        int listSizeBeforeCreation = list.size();
         User user = userDataService.createAndSaveUser("Toma", "Tisova", "");
         System.out.println(user.getId() + ", " + user.getFirstName());
         list = Lists.newArrayList(usersCrudRepository.findAll());
-        Assertions.assertEquals(1,list.size());
+        Assertions.assertEquals(listSizeBeforeCreation + 1, list.size());
     }
 
 }
