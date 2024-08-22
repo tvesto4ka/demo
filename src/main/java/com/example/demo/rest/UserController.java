@@ -21,21 +21,18 @@ public class UserController {
 
     @GetMapping(value = "/{id}")
     public UserDto findById(@PathVariable("id") Long id) {
-        return RestPreconditions.checkFound(service.findById(id));
+        return service.findById(id);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Long create(@RequestBody UserDto user) {
-        //Preconditions.checkNotNull(user);
         return service.create(user);
     }
 
     @PutMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void update(@PathVariable( "id" ) Long id, @RequestBody UserDto user) {
-        //Preconditions.checkNotNull(user);
-        RestPreconditions.checkFound(service.findById(user.getId()));
         service.update(user);
     }
 

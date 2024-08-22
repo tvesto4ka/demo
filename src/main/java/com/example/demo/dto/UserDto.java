@@ -1,13 +1,19 @@
 package com.example.demo.dto;
 
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
 public class UserDto {
     private Long id;
 
+    @Setter
     private String firstName;
+
+    @Setter
     private String lastName;
+
+    @Setter
     private String email;
 
     public UserDto(Long id, String firstName, String lastName, String email) {

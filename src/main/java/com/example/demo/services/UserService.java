@@ -4,7 +4,6 @@ import com.example.demo.dto.UserDto;
 import com.example.demo.entities.User;
 import com.example.demo.exceptions.UserNotFoundException;
 import com.example.demo.repositories.UsersCrudRepository;
-import com.example.demo.rest.RestPreconditions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,6 +14,7 @@ import java.util.Optional;
 
 @Service
 public class UserService {
+
     @Autowired
     private UsersCrudRepository usersCrudRepository;
 
@@ -41,23 +41,31 @@ public class UserService {
     }
 
     public UserDto findById(Long id) {
-        if (usersCrudRepository.findById(id).isPresent()) {
-            return toDto(usersCrudRepository.findById(id).get());
-        } else
-            throw new UserNotFoundException();
+        Optional<User> userOp = usersCrudRepository.findById(id);
+        if (userOp.isPresent()) {
+            return toDto(userOp.get());
+        } else {
+            throw new UserNotFoundException("User with id=" + id + " not found");
+        }
     }
 
+    @Transactional
     public void deleteById(Long id) {
         usersCrudRepository.deleteById(id);
     }
 
+    @Transactional
     public Long create(UserDto user) {
         return usersCrudRepository.save(toEntity(user)).getId();
     }
 
+    @Transactional
     public void update(UserDto dto) {
         Optional<User> userOp = usersCrudRepository.findById(dto.getId());
-        User user = RestPreconditions.checkFound(userOp);
+        if (userOp.isEmpty()) {
+            throw new UserNotFoundException("User with id=" + dto.getId() + " not found");
+        }
+        User user = userOp.get();
         user.setFirstName(dto.getFirstName());
         user.setLastName(dto.getLastName());
         user.setEmail(dto.getEmail());

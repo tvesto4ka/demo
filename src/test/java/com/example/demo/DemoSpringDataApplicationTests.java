@@ -42,4 +42,12 @@ public class DemoSpringDataApplicationTests extends AbstractSpringTest {
         list = Lists.newArrayList(usersCrudRepository.findAll());
         Assertions.assertEquals(listSizeBeforeCreation + 1, list.size());
     }
+
+    @Test
+    public void testUpdate() {
+        UserDto dto = new UserDto(1L, "Denis", "Ivanov", "");
+        userService.update(dto);
+        UserDto user = userService.findById(1L);
+        Assertions.assertEquals("Denis", user.getFirstName());
+    }
 }
