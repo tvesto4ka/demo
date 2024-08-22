@@ -11,13 +11,13 @@ import org.springframework.test.web.servlet.MockMvc;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-public class FooControllerAppIntegrationTest {
+public class UserControllerAppIntegrationTest {
     @Autowired
     private MockMvc mockMvc;
 
     @Test
     public void whenTestApp_thenEmptyResponse() throws Exception {
-//          this.mockMvc.perform(get("/foos")
+//          this.mockMvc.perform(get("/users")
 //                .andExpect(status().isOk())
 //                .andExpect(...);
     }

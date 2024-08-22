@@ -1,8 +1,9 @@
 package com.example.demo;
 
+import com.example.demo.dto.UserDto;
 import com.example.demo.entities.User;
 import com.example.demo.repositories.UsersCrudRepository;
-import com.example.demo.services.UserDataService;
+import com.example.demo.services.UserService;
 import org.assertj.core.util.Lists;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
@@ -16,7 +17,7 @@ public class DemoSpringDataApplicationTests extends AbstractSpringTest {
     private UsersCrudRepository usersCrudRepository;
 
     @Autowired
-    private UserDataService userDataService;
+    private UserService userService;
 
     @Test
     public void testFindByFirstNameAndLastName() {
@@ -36,10 +37,9 @@ public class DemoSpringDataApplicationTests extends AbstractSpringTest {
     public void testCreateAndSaveUser() {
         List <User> list = Lists.newArrayList(usersCrudRepository.findAll());
         int listSizeBeforeCreation = list.size();
-        User user = userDataService.createAndSaveUser("Toma", "Tisova", "");
+        UserDto user = userService.createAndSaveUser("Toma", "Tisova", "");
         System.out.println(user.getId() + ", " + user.getFirstName());
         list = Lists.newArrayList(usersCrudRepository.findAll());
         Assertions.assertEquals(listSizeBeforeCreation + 1, list.size());
     }
-
 }
