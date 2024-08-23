@@ -8,11 +8,14 @@ import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithAnonymousUser;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.testcontainers.shaded.com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.Optional;
 
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -35,9 +38,9 @@ public class UserControllerAppIntegrationTest extends AbstractSpringTest {
     }
 
     @Test
-//    @WithMockUser
+    @WithMockUser
     public void whenGetAllUsers() throws Exception {
-        this.mockMvc.perform(get("/users"))
+        mockMvc.perform(get("/users"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().json("""
@@ -46,9 +49,9 @@ public class UserControllerAppIntegrationTest extends AbstractSpringTest {
     }
 
     @Test
-//    @WithMockUser
+    @WithMockUser
     public void testGetUserById() throws Exception {
-        this.mockMvc.perform(get("/users/1"))
+        mockMvc.perform(get("/users/1"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().json("""
@@ -57,13 +60,14 @@ public class UserControllerAppIntegrationTest extends AbstractSpringTest {
     }
 
     @Test
-//    @WithMockUser
+    @WithMockUser
     public void testUpdateUserById() throws Exception {
         UserDto dto = new UserDto(1L, "Tim", "Ivanov", "");
-        this.mockMvc.perform(put("/users/{id}", 1)
+        mockMvc.perform(put("/users/{id}", 1)
                         .content(new ObjectMapper().writeValueAsString(dto))
                         .contentType(MediaType.APPLICATION_JSON)
-                        .accept(MediaType.APPLICATION_JSON))
+                        .accept(MediaType.APPLICATION_JSON)
+                        .with(csrf()))
                 .andDo(print())
                 .andExpect(status().isOk());
         if (repo.findById(1L).isPresent()) {
@@ -75,13 +79,13 @@ public class UserControllerAppIntegrationTest extends AbstractSpringTest {
     }
 
     @Test
-//    @WithMockUser
+    @WithMockUser
     public void testCreateUser() throws Exception {
         UserDto dto = new UserDto("Denis", "Tisov");
         mockMvc.perform(post("/users").content(new ObjectMapper().writeValueAsString(dto))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON)
-                )
+                        .with(csrf()))
                 .andExpect(status().isCreated());
         Assertions.assertEquals(2, repo.count());
         Optional<User> user = repo.findByFirstNameAndLastName("Denis", "Tisov");
@@ -94,12 +98,21 @@ public class UserControllerAppIntegrationTest extends AbstractSpringTest {
     }
 
     @Test
-//    @WithMockUser
+    @WithMockUser(roles = "ADMIN")
     public void testDeleteUserById() throws Exception {
-        this.mockMvc.perform(delete("/users/1"))
+        mockMvc.perform(delete("/users/1")
+                        .with(csrf())
+                )
                 .andDo(print())
                 .andExpect(status().isOk());
 
         Assertions.assertEquals(0, repo.count());
+    }
+
+    @Test
+    @WithAnonymousUser
+    public void whenGetAllUsersForAnonymous() throws Exception {
+        mockMvc.perform(get("/users"))
+                .andExpect(status().isUnauthorized());
     }
 }
