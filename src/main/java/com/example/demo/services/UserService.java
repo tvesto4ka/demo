@@ -23,7 +23,11 @@ public class UserService {
     }
 
     private User toEntity(UserDto dto) {
-        return new User(dto.getId(), dto.getFirstName(), dto.getLastName(), dto.getEmail());
+        if (dto.getId() != null) {
+            return new User(dto.getId(), dto.getFirstName(), dto.getLastName(), dto.getEmail());
+        } else {
+            return new User(dto.getFirstName(), dto.getLastName(), dto.getEmail());
+        }
     }
 
     @Transactional

@@ -29,13 +29,13 @@ public class DemoSpringDataApplicationTests extends AbstractSpringTest {
     public void testFindByFirstNameStartsWithOrderByFirstNamePage() {
         List<User> list = usersCrudRepository.
                 findByFirstNameStartsWith("A");
-        list.forEach(u -> System.out.println(u.getFirstName() + " " +u.getLastName()));
+        list.forEach(u -> System.out.println(u.getFirstName() + " " + u.getLastName()));
         Assertions.assertNotNull(list.get(0));
     }
 
     @Test
     public void testCreateAndSaveUser() {
-        List <User> list = Lists.newArrayList(usersCrudRepository.findAll());
+        List<User> list = Lists.newArrayList(usersCrudRepository.findAll());
         int listSizeBeforeCreation = list.size();
         UserDto user = userService.createAndSaveUser("Toma", "Tisova", "");
         System.out.println(user.getId() + ", " + user.getFirstName());

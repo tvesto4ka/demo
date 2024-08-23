@@ -31,13 +31,13 @@ public class UserController {
     }
 
     @PutMapping(value = "/{id}")
-    @ResponseStatus(HttpStatus.OK)
-    public void update(@PathVariable( "id" ) Long id, @RequestBody UserDto user) {
+    public void update(
+//            @PathVariable("id") Long id,
+            @RequestBody UserDto user) {
         service.update(user);
     }
 
     @DeleteMapping(value = "/{id}")
-//    @ResponseStatus(HttpStatus.OK)
     public void delete(@PathVariable("id") Long id) {
         service.deleteById(id);
     }
