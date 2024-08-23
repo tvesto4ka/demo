@@ -5,6 +5,7 @@ import com.example.demo.entities.User;
 import com.example.demo.repositories.UsersCrudRepository;
 import com.example.demo.services.UserService;
 import org.assertj.core.util.Lists;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,11 @@ public class DemoSpringDataApplicationTests extends AbstractSpringTest {
 
     @Autowired
     private UserService userService;
+
+    @Before
+    public void setUp() {
+        jdbcTemplate.execute("INSERT INTO users (FIRST_NAME, LAST_NAME) VALUES ('Alex', 'Ivanov')");
+    }
 
     @Test
     public void testFindByFirstNameAndLastName() {
